@@ -1,25 +1,13 @@
 <?php
 /**
- * This file is part of Pico. It's copyrighted by the contributors recorded
- * in the version control history of the file, available from the following
- * original location:
+ * PicoOrdGallery
  *
- * <https://github.com/picocms/Pico/blob/master/plugins/DummyPlugin.php>
+ * A gallery plugin for the Pico CMS.
  *
- * SPDX-License-Identifier: MIT
- * License-Filename: LICENSE
- */
-
-/**
- * Pico dummy plugin - a template for plugins
- *
- * You're a plugin developer? This template may be helpful :-)
- * Simply remove the events you don't need and add your own logic.
- *
- * @author  Daniel Rudolf
- * @link    http://picocms.org
+ * @author  OrdinalM
+ * @link    https://github.com/ordinalM/PicoOrdGallery
  * @license http://opensource.org/licenses/MIT The MIT License
- * @version 2.0
+ * @version 0.1
  */
 class PicoOrdGallery extends AbstractPicoPlugin
 {
