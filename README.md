@@ -20,11 +20,13 @@ to generate a gallery from all the images in `<directory>`. For example:
 %pico_ord_gallery assets/galleries/my_example_gallery%
 ```
 
+Optionally you may specify a gallery style defined in your configuration as a third argument - see below.
+
 ## Configuration
 
 PicoOrdGallery reads from the `pico_ord_gallery` Pico config variable, in `config.yml` or other configuration file.
 
-### Example
+### Basic configuration example
 
 The following in your `config.yml` will set the default options:
 
@@ -33,15 +35,36 @@ The following in your `config.yml` will set the default options:
 # PicoOrdGallery
 #
 pico_ord_gallery:
-  thumbnail_size:
-    y: 200
-  cache_dir: cache/pico_ord_gallery
-  gallery_class: pico-ord-gallery
-  gallery_item_class: pico-ord-gallery-item
-  thumbnail_quality: 75
+  default:
+    thumbnail_size:
+      y: 200
+    cache_dir: cache/PicoOrdGallery
+    gallery_class: pico-ord-gallery
+    gallery_item_class: pico-ord-gallery-item
+    thumbnail_quality: 75
 ```
 
-### Options
+### Gallery styles
+
+More items in the `pico_ord_gallery` variable will create new styles, which can then be used with shortcodes. Any options not specified will default to the values for the "default" style. The following will create a style called "large" which creates thumbnails with a maximum dimension of 800px:
+
+```
+pico_ord_gallery:
+  large:
+    thumbnail_size:
+      x: 800
+      y: 800
+```
+
+The style name can then be specified as the third argument in the gallery shortcode e.g.
+
+```
+%pico_ord_gallery assets/galleries/my_example_gallery large%
+```
+
+Any configuration options can be used in a gallery style.
+
+### Available options
 
 #### `thumbnail_size`
 
