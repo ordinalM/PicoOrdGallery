@@ -100,13 +100,15 @@ class PicoOrdGallery extends AbstractPicoPlugin
         $dh = opendir($dir);
         while (($filename = readdir($dh)) !== FALSE) {
           if (is_file($dir . $filename)) {
-            $images[] = (object)array(
+            $images[$filename] = (object)array(
               'thumb' => $this->createImageThumbnail($dir . $filename, $gallery_style),
               'source' => $dir . $filename,
             );
           }
         }
         if (count($images) > 0) {
+          // Sort images by filename alphabetically
+          ksort($images);
           $image_html = array_reduce(
             $images,
             function ($carry, $image) use ($gallery_style) {
@@ -142,13 +144,17 @@ class PicoOrdGallery extends AbstractPicoPlugin
       $style = 'default';
     }
     // Create an appropriate unique filename for this thumbnail
-    $thumb_filename = md5(serialize($this->config[$style]['thumbnail_size']) . ':'. $filepath) . '.jpg';
     // Just in case we are generating an enormous number of thumbnails, put this in a subdir of the cache dir
-    $thumb_subdir = $this->config[$style]['cache_dir'] . substr($thumb_filename, 0, 1) . '/';
-    if (!is_dir($thumb_subdir)) {
-      mkdir($thumb_subdir, '0755');
+    $thumb_filepath = sprintf(
+      '%s/%dx%d/%s.jpg',
+      $this->config[$style]['cache_dir'],
+      $this->config[$style]['thumbnail_size']['x'],
+      $this->config[$style]['thumbnail_size']['y'],
+      preg_replace('/\.[a-z]+$/', '', $filepath)
+    );
+    if (!is_dir(dirname($thumb_filepath))) {
+      mkdir(dirname($thumb_filepath), '0755', TRUE);
     }
-    $thumb_filepath =  $thumb_subdir . $thumb_filename;
     // Has it not already been created, or is the source file now newer?
     // If so make a new thumbnail.
     if (!file_exists($thumb_filepath) || filemtime($thumb_filepath) < filemtime($filepath)) {
